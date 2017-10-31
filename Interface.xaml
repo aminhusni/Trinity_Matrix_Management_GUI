@@ -1,0 +1,88 @@
+﻿<Window x:Class="WpfApp1.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Matrix-Synapse Admin GUI" Height="277.909" Width="492.17">
+    <Grid>
+        <TabControl RenderTransformOrigin="0.5,0.5">
+            <TabItem Header="User Management">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="79*"/>
+                        <ColumnDefinition Width="199*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="usernamebox" HorizontalAlignment="Left" Height="23" Margin="10,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Grid.ColumnSpan="2"/>
+                    <Button Content="Get Info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,84,0,0" Click="Button_Click"/>
+                    <Label Content="Username(@user:homeserver.com)" HorizontalAlignment="Left" Height="29" Margin="7,14,0,0" VerticalAlignment="Top" Width="206" Grid.ColumnSpan="2"/>
+                    <Button Content="Deactivate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,109,0,0" Click="Button_Click_1"/>
+                    <Button Content="Reset Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,134,0,0" Click="Button_Click_2"/>
+                    <RichTextBox x:Name="statusbox2" HorizontalAlignment="Left" Height="180" Margin="77,22,0,0" VerticalAlignment="Top" Width="255"  ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" Grid.Column="1">
+                        <FlowDocument>
+                            <Paragraph>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Create User">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="create_button" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="79" Margin="119,169,0,0" Click="create_click" Height="23"/>
+                    <TextBox x:Name="username_create" HorizontalAlignment="Left" Height="23" Margin="10,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" />
+                    <Label Content="Username(example: Alice)" HorizontalAlignment="Left" Height="29" Margin="7,14,0,0" VerticalAlignment="Top" Width="206"/>
+                    <PasswordBox x:Name="password_create" HorizontalAlignment="Left" Height="23" Margin="10,87,0,0"  VerticalAlignment="Top" Width="188"/>
+                    <Label Content="Password" HorizontalAlignment="Left" Height="29" Margin="7,62,0,0" VerticalAlignment="Top" Width="206"/>
+                    <PasswordBox x:Name="secret_create" HorizontalAlignment="Left" Height="23" Margin="10,134,0,0"  VerticalAlignment="Top" Width="188"/>
+                    <Label Content="Server Shared Secret" HorizontalAlignment="Left" Height="29" Margin="7,109,0,0" VerticalAlignment="Top" Width="206"/>
+                    <CheckBox x:Name="admin_check" Content="Make Admin" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.867" Width="94"/>
+
+
+
+                </Grid>
+
+
+
+            </TabItem>
+            <TabItem Header="Server Version">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
+                    <Label Content="This Matrix Server Supports Version:" HorizontalAlignment="Left" Margin="129,90,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="217"/>
+                    <Image HorizontalAlignment="Left" Height="75" Margin="157,15,0,0" VerticalAlignment="Top" Width="161" Source="logo1.png"/>
+
+
+                    <TextBlock x:Name="versionbox" HorizontalAlignment="Left" Margin="79,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="317" Height="81" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" UseLayoutRounding="False" TextAlignment="Center"/>
+
+                </Grid>
+
+
+
+            </TabItem>
+
+            <TabItem Header="Rooms" Height="22" VerticalAlignment="Bottom">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
+                    <Label Content="Public Rooms" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="255"/>
+                    <TextBox x:Name="roomidbox" HorizontalAlignment="Left" Height="23" Margin="230,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="238"/>
+                    <Label Content="Room ID(RMID:homeserver.com)" HorizontalAlignment="Left" Height="29" Margin="226,11,0,0" VerticalAlignment="Top" Width="196"/>
+                    <Button x:Name="Purge_Room" Content="Purge Room" HorizontalAlignment="Left" Margin="230,69,0,0" VerticalAlignment="Top" Width="94" Click="Purge_Button"/>
+                    <Button x:Name="Purge_Room_Copy" Content="Query Rooms" HorizontalAlignment="Left" Margin="122,13,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click_3"/>
+                    <ListBox x:Name="roomlist" HorizontalAlignment="Left" Height="167" VerticalAlignment="Top" Width="206" Margin="10,41,0,0" SelectionChanged="roomlist_SelectionChanged"/>
+
+
+
+
+
+                </Grid>
+            </TabItem>
+
+
+
+
+        </TabControl>
+    </Grid>
+</Window>
