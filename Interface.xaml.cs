@@ -30,12 +30,12 @@ namespace WpfApp1
         string HOMESERVER;
         public static string[,] room;
 
-        public Window1(string token, string homeserver)
+        public Window1(string token, string homeserver, string adminuser)
         {
             InitializeComponent();
             TOKEN = token;
             HOMESERVER = homeserver;
-            object1 = new trinity(HOMESERVER, TOKEN);
+            object1 = new trinity(HOMESERVER, TOKEN, adminuser);
             getver();
         }
 
@@ -74,12 +74,13 @@ namespace WpfApp1
             string user = usernamebox.Text;
 
             statusbox2.Document.Blocks.Clear();
+            statusbox2.AppendText("Querying data, please wait...");
 
             try
             {
                 Task<dynamic> t = object1.Whois(usernamebox.Text);
                 await t;
-
+                statusbox2.Document.Blocks.Clear();
                 string username = t.Result.user_id;
                 Debug.WriteLine(username);
                 statusbox2.AppendText("User ID: " + t.Result.user_id + "\n");
@@ -95,23 +96,31 @@ namespace WpfApp1
             }
             catch (Exception ex)
             {
+                statusbox2.AppendText("Something went wrong...\n");
+                statusbox2.AppendText("ex");
                 Debug.WriteLine(ex);
             }
 
         }
         
         //Allegedly when closing window
-       private async void Window1_Closing(object sender, CancelEventArgs e)
+        protected async override void OnClosed(EventArgs e)
         {
+            base.OnClosed(e);
+            Debug.WriteLine("CLOSINGGGG");
             try
             {
+                Debug.WriteLine("Logging out");
                 Task<string> t = object1.Logout();
                 await t;
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("logoutfail");
                 Debug.WriteLine(ex);
             }
+
+            Application.Current.Shutdown();
         }
 
         //Deactivate button
@@ -233,26 +242,28 @@ namespace WpfApp1
             selection = roomlist.SelectedIndex;
             try
             {
-
                 roomidbox.Text = Window1.room[selection, 1];
             }
             catch
             {
-                
-
+                roomidbox.Text = "";
             }
         }
 
         private async void Purge_Button(object sender, RoutedEventArgs e)
         {
-            try
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Purging a room will kick out all users including you and will never be accessible again.", "PURGE ROOM?", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
             {
-                Task<dynamic> t = object1.purge(roomidbox.Text);
-                await t;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
+                try
+                {
+                    Task<dynamic> t = object1.purge(roomidbox.Text);
+                    await t;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
             }
         }
     }

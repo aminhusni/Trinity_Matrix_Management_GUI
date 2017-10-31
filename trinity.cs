@@ -22,11 +22,13 @@ namespace WpfApp1
 
         private static HttpClient client = new HttpClient();
 
-        public trinity(string homeserver, string token=null) { 
+        public trinity(string homeserver, string token = null, string adminuserr = null) { 
             BASE_URL = homeserver;
             auth_query["access_token"] = token;
+            adminuser = adminuserr;
 
             authstring = "?access_token=" + auth_query["access_token"];
+            Debug.WriteLine(adminuserr);
         }
 
         //LOGIN
@@ -39,6 +41,7 @@ namespace WpfApp1
             Debug.WriteLine(mes);
             var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(mes);
             auth_token = values["access_token"];
+            adminuser = values["user_id"];
             return mes;
         }
 
@@ -47,6 +50,10 @@ namespace WpfApp1
             return auth_token;
         }
 
+        public string getadmin()
+        {
+            return adminuser;
+        }
         //Whois User
         public async Task<dynamic> Whois(string user) {
             string GETINFO = "/_matrix/client/r0/admin/whois/";
@@ -71,7 +78,6 @@ namespace WpfApp1
             var response = await client.GetAsync(fullquery);
 
             return null;
-
         }
 
         //Deactivate an account
@@ -187,14 +193,19 @@ namespace WpfApp1
 
             //GET THE MEMBERS INTO AN ARRAY
             string memberquery = "/_matrix/client/r0/rooms/"+roomid+"/members";
+            string joinroom = "/_matrix/client/r0/rooms/{roomId}/join";
             string kickquery = "/_matrix/client/r0/rooms/"+roomid+"/kick";
             string setprivate = "/_matrix/client/r0/rooms/"+roomid+ "/state/m.room.join_rules";
             string delist = "/_matrix/client/r0/directory/list/room/"+roomid;
 
             string query = BASE_URL + memberquery + authstring;
+            string joinroomm = BASE_URL + joinroom + authstring;
             string kickqueryy = BASE_URL + kickquery + authstring;
             string setprivatee = BASE_URL + setprivate + authstring;
             string delistt = BASE_URL + delist + authstring;
+
+            string joinjson = "{\"room_id\": \""+roomid+"\"}";
+            await client.PostAsync(kickqueryy, new StringContent(joinjson, Encoding.UTF8, "application/json"));
 
             Debug.WriteLine(query);
             var response = await client.GetAsync(query);
@@ -228,19 +239,19 @@ namespace WpfApp1
             string json2 = "{\"join_rule\": \"invite\"}";
             await client.PutAsync(setprivatee, new StringContent(json2, Encoding.UTF8, "application/json"));
 
-
-
             //Proceeds to kick all members
-
             foreach (string x in members)
             {
-                Debug.WriteLine("KICKED: "+x);
-                string json = "{\"reason\": \"This room has been purged\", \"user_id\": \""+x+"\"}";
-                await client.PostAsync(kickqueryy, new StringContent(json, Encoding.UTF8, "application/json"));
-                
+                if (x != adminuser)
+                {
+                    Debug.WriteLine("KICKED: " + x);
+                    string json = "{\"reason\": \"This room has been purged\", \"user_id\": \"" + x + "\"}";
+                    await client.PostAsync(kickqueryy, new StringContent(json, Encoding.UTF8, "application/json"));
+                }
             }
-
-
+            Debug.WriteLine("KICKED: " + adminuser);
+            string jsona = "{\"reason\": \"This room has been purged\", \"user_id\": \"" + adminuser + "\"}";
+            await client.PostAsync(kickqueryy, new StringContent(jsona, Encoding.UTF8, "application/json"));
 
             return null;
 

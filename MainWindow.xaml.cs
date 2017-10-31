@@ -44,9 +44,10 @@ namespace WpfApp1
             {
                 Task<string> t = object1.Login(user, password);
                 await t;
+                Debug.WriteLine(t.Result);
                 statustext.Content = "Login Success!";
 
-                Window1 form = new Window1(object1.gettoken(), homeserver);
+                Window1 form = new Window1(object1.gettoken(), homeserver, object1.getadmin());
                 form.Show();
                 this.Hide();
             }
