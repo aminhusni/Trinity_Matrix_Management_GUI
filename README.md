@@ -3,8 +3,8 @@ A management GUI for Matrix-Synapse server
 
 ## To do list
 
-- Do proper error handling
-- Parse responses properly according to spec
+- [DONE]Do proper error handling
+- [DONE]Parse responses properly according to spec
 - Optimize cancerous codes
 - Force logout of all devices(security response for admins)
 - Properly redact before purging room
