@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Project Trinity " Height="292.931" Width="407.145">
+        Title="Project Trinity " Height="303.032" Width="407.145">
     <Grid>
         <TextBox x:Name="HomeserverBox" HorizontalAlignment="Left" Height="33" Margin="28,54,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" FontSize="20" />
         <TextBox x:Name="UserBox" HorizontalAlignment="Left" Height="33" Margin="28,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" FontSize="20" />
-        <Button Content="Login" HorizontalAlignment="Left" Height="33" Margin="256,175,0,0" VerticalAlignment="Top" Width="112" Click="Button_Click"/>
+        <Button x:Name="loginbutton" Content="Login" HorizontalAlignment="Left" Height="33" Margin="256,175,0,0" VerticalAlignment="Top" Width="112" Click="Button_Click"/>
         <PasswordBox x:Name="PassBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,175,0,0" Width="223" Height="33" FontSize="20"/>
         <Label x:Name="statustext" Content="Please login with an administrative user" HorizontalAlignment="Left" Height="27" Margin="28,213,0,0" VerticalAlignment="Top" Width="321"/>
-        <Label x:Name="homeserverlabel" Content="Matrix Server Address" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,23,0,0" FontWeight="Bold" Width="147"/>
+        <Label x:Name="homeserverlabel" Content="Matrix Server Address (https://yourserver.com)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,23,0,0" FontWeight="Bold" Width="340"/>
         <Label x:Name="homeserverlabel_Copy" Content="Admin Username" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,87,0,0" FontWeight="Bold"/>
         <Label x:Name="homeserverlabel_Copy1" Content="Password" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="28,151,0,0" FontWeight="Bold"/>
     </Grid>

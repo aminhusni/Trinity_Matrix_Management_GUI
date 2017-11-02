@@ -5,21 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Matrix-Synapse Admin GUI" Height="281.988" Width="492.17">
+        Title="Matrix-Synapse Admin GUI" Height="281.988" Width="491.17">
     <Grid>
         <TabControl RenderTransformOrigin="0.5,0.5">
             <TabItem Header="User Management">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="79*"/>
-                        <ColumnDefinition Width="199*"/>
-                    </Grid.ColumnDefinitions>
                     <TextBox x:Name="usernamebox" HorizontalAlignment="Left" Height="23" Margin="10,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" Grid.ColumnSpan="2"/>
-                    <Button Content="Get Info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,84,0,0" Click="Button_Click"/>
+                    <Button Content="Get Info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,84,0,0" Click="Button_Click" Height="20"/>
                     <Label Content="Username(@user:homeserver.com)" HorizontalAlignment="Left" Height="29" Margin="7,14,0,0" VerticalAlignment="Top" Width="206" Grid.ColumnSpan="2"/>
-                    <Button Content="Deactivate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,109,0,0" Click="Button_Click_1"/>
-                    <Button Content="Reset Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,134,0,0" Click="Button_Click_2"/>
-                    <RichTextBox x:Name="statusbox2" HorizontalAlignment="Left" Height="180" Margin="77,22,0,0" VerticalAlignment="Top" Width="255"  ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible" Grid.Column="1">
+                    <Button Content="Deactivate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,109,0,0" Click="Button_Click_1" Height="20"/>
+                    <Button Content="Reset Password" HorizontalAlignment="Left" VerticalAlignment="Top" Width="94" Margin="10,134,0,0" Click="Button_Click_2" Height="20"/>
+                    <RichTextBox x:Name="statusbox2" Margin="212,23,10,19"  ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Visible">
                         <FlowDocument>
                             <Paragraph>
                             </Paragraph>
@@ -30,8 +26,8 @@
             <TabItem Header="Create User">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="434*"/>
+                        <ColumnDefinition Width="43*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="create_button" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="79" Margin="119,169,0,0" Click="create_click" Height="23"/>
                     <TextBox x:Name="username_create" HorizontalAlignment="Left" Height="23" Margin="10,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="188" />
@@ -40,13 +36,14 @@
                     <Label Content="Password" HorizontalAlignment="Left" Height="29" Margin="7,62,0,0" VerticalAlignment="Top" Width="206"/>
                     <PasswordBox x:Name="secret_create" HorizontalAlignment="Left" Height="23" Margin="10,134,0,0"  VerticalAlignment="Top" Width="188"/>
                     <Label Content="Server Shared Secret" HorizontalAlignment="Left" Height="29" Margin="7,109,0,0" VerticalAlignment="Top" Width="206"/>
-                    <CheckBox x:Name="admin_check" Content="Make Admin" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.867" Width="94"/>
+                    <CheckBox x:Name="admin_check" Content="Make Admin" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.867" Width="94" Height="15"/>
+                    <Label x:Name="statusboxcreate" Content="" HorizontalAlignment="Left" Margin="218,14,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="234" Height="29"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Rooms" Height="22" VerticalAlignment="Bottom">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                     <Label Content="Public Rooms" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="107"/>
-                    <TextBox x:Name="roomidbox" HorizontalAlignment="Left" Height="23" Margin="230,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="238"/>
+                    <TextBox x:Name="roomidbox" HorizontalAlignment="Left" Height="23" Margin="230,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="233"/>
                     <Label Content="Room ID(RMID:homeserver.com)" HorizontalAlignment="Left" Height="29" Margin="226,11,0,0" VerticalAlignment="Top" Width="196"/>
                     <Button x:Name="Purge_Room" Content="Purge Room" HorizontalAlignment="Left" Margin="230,69,0,0" VerticalAlignment="Top" Width="94" Click="Purge_Button"/>
                     <Button x:Name="Purge_Room_Copy" Content="Query Rooms" HorizontalAlignment="Left" Margin="122,13,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click_3"/>
@@ -62,11 +59,12 @@
             </TabItem>
             <TabItem Header="Information">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
-                    <Label Content="Copyright: Amin Husni" HorizontalAlignment="Left" Margin="167,81,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="140"/>
-                    <Label Content="GNU General Public License v3.0" HorizontalAlignment="Left" Margin="137,55,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="195"/>
-                    <Label Content="Thanks: Volgy" HorizontalAlignment="Left" Margin="192,107,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="90"/>
-                    <Label Content="https://github.com/aminhusni/Trinity_Matrix_Management_GUI" HorizontalAlignment="Left" Margin="52,163,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="370"/>
-
+                    <Label Content="Copyright: Amin Husni" HorizontalAlignment="Left" Margin="168,105,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="140"/>
+                    <Label Content="GNU General Public License v3.0" HorizontalAlignment="Left" Margin="138,79,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="195"/>
+                    <Label Content="Thanks: Volgy" HorizontalAlignment="Left" Margin="193,131,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="90"/>
+                    <Label Content="https://github.com/aminhusni/Trinity_Matrix_Management_GUI" HorizontalAlignment="Left" Margin="51,173,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="370"/>
+                    <Label Content="Trinity - Matrix Administrative GUI" HorizontalAlignment="Left" Margin="117,11,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="242" FontSize="14"/>
+                    <Label Content="VERSION BETA 1.0" HorizontalAlignment="Left" Margin="182,54,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="115"/>
                 </Grid>
             </TabItem>
         </TabControl>

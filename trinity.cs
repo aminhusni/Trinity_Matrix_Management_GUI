@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
 using System.Net.Http;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
+using System.Net;
+
+//System.Windows.MessageBox.Show("", "ERROR!", System.Windows.MessageBoxButton.OK);
 
 namespace WpfApp1
 {
@@ -19,16 +19,44 @@ namespace WpfApp1
         string auth_token;
         static Dictionary<string, string> auth_query = new Dictionary<string, string> { { "access_token", null } };
         string adminuser;
+        string password;
 
         private static HttpClient client = new HttpClient();
 
-        public trinity(string homeserver, string token = null, string adminuserr = null) { 
+        public trinity(string homeserver, string token = null, string adminuserr = null, string pass = null) { 
             BASE_URL = homeserver;
             auth_query["access_token"] = token;
             adminuser = adminuserr;
-
+            password = pass;
             authstring = "?access_token=" + auth_query["access_token"];
             Debug.WriteLine(adminuserr);
+        }
+
+        public void checkresp(HttpStatusCode response)
+        {
+            if (response == HttpStatusCode.Forbidden)
+            {
+                System.Windows.MessageBox.Show("Authorization error", "ERROR!", System.Windows.MessageBoxButton.OK);
+                throw new System.ArgumentException("Error 403");
+            }
+
+            if (response == HttpStatusCode.NotFound)
+            {
+                System.Windows.MessageBox.Show("Probably not a Matrix API or server is down", "ERROR!", System.Windows.MessageBoxButton.OK);
+                throw new System.ArgumentException("Error 404");
+            }
+
+            if (response == HttpStatusCode.BadRequest)
+            {
+                System.Windows.MessageBox.Show("Request could not be fulfiled. Probably conflicting entry or invalid.", "ERROR!", System.Windows.MessageBoxButton.OK);
+                throw new System.ArgumentException("Error 400");
+            }
+
+            if (response == HttpStatusCode.GatewayTimeout  || response == HttpStatusCode.BadGateway) {
+                System.Windows.MessageBox.Show("Error contacting server", "ERROR!", System.Windows.MessageBoxButton.OK);
+                throw new System.ArgumentException("Error 500 range");
+            }
+
         }
 
         //LOGIN
@@ -38,10 +66,13 @@ namespace WpfApp1
             var response = await client.PostAsync(BASE_URL + "/_matrix/client/r0/login", new StringContent(json, Encoding.UTF8, "application/json"));
             var mes = await response.Content.ReadAsStringAsync();
 
+            checkresp(response.StatusCode);
+
             Debug.WriteLine(mes);
             var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(mes);
             auth_token = values["access_token"];
             adminuser = values["user_id"];
+
             return mes;
         }
 
@@ -62,9 +93,8 @@ namespace WpfApp1
 
             var response = await client.GetAsync(fullquery);
             var mes = await response.Content.ReadAsStringAsync();
-
+            checkresp(response.StatusCode);
             string modifiedmes = mes.Replace("\"\"", "\"unknown\"");
-
             Debug.WriteLine(modifiedmes);
             dynamic values = JsonConvert.DeserializeObject<dynamic>(modifiedmes);
             return values;
@@ -74,8 +104,9 @@ namespace WpfApp1
         public async Task<string> Logout() {
             string logout = "/_matrix/client/r0/logout";
             string fullquery = BASE_URL + logout + authstring;
-
             var response = await client.GetAsync(fullquery);
+            checkresp(response.StatusCode);
+
 
             return null;
         }
@@ -88,6 +119,7 @@ namespace WpfApp1
             Debug.WriteLine(query);
             var response = await client.PostAsync(query, null);
             var mes = await response.Content.ReadAsStringAsync();
+            checkresp(response.StatusCode);
             Debug.WriteLine(mes);
 
             return null;
@@ -101,6 +133,7 @@ namespace WpfApp1
             Debug.WriteLine(query);
             var response = await client.PostAsync(query, new StringContent(json, Encoding.UTF8, "application/json"));
             var mes = await response.Content.ReadAsStringAsync();
+            checkresp(response.StatusCode);
             Debug.WriteLine(mes);
 
             dynamic values = JsonConvert.DeserializeObject<dynamic>(mes);
@@ -144,11 +177,10 @@ namespace WpfApp1
 
             var response = await client.PostAsync(query, new StringContent(json, Encoding.UTF8, "application/json"));
             var mes = await response.Content.ReadAsStringAsync();
-
+            checkresp(response.StatusCode);
             Debug.WriteLine(mes);
             var values = JsonConvert.DeserializeObject<Dictionary<string, string>>(mes);
             return mes;
-
         }
 
         public async Task<dynamic> version()
@@ -156,15 +188,14 @@ namespace WpfApp1
             string version = "/_matrix/client/versions";
             string query = BASE_URL + version + authstring;
             
-
             Debug.WriteLine(query);
             var response = await client.GetAsync(query);
             var mes = await response.Content.ReadAsStringAsync();
+            checkresp(response.StatusCode);
             Debug.WriteLine(mes);
 
             dynamic values = JsonConvert.DeserializeObject<dynamic>(mes);
             return values;
-
         }
 
         public async Task<dynamic> publicroom()
@@ -172,18 +203,15 @@ namespace WpfApp1
             string publicroom = "/_matrix/client/r0/publicRooms";
             string query = BASE_URL + publicroom + authstring;
 
-
             Debug.WriteLine(query);
             var response = await client.GetAsync(query);
             var mes = await response.Content.ReadAsStringAsync();
+            checkresp(response.StatusCode);
             Debug.WriteLine(mes);
 
             dynamic values = JsonConvert.DeserializeObject<dynamic>(mes);
             return values;
-
         }
-
-
 
         public async Task<dynamic> purge(string roomid)
         {
@@ -210,6 +238,8 @@ namespace WpfApp1
             Debug.WriteLine(query);
             var response = await client.GetAsync(query);
             var mes = await response.Content.ReadAsStringAsync();
+            checkresp(response.StatusCode);
+
             Debug.WriteLine(mes);
 
             dynamic values = JsonConvert.DeserializeObject<dynamic>(mes);
@@ -235,7 +265,6 @@ namespace WpfApp1
             string json3 = "{\"visibility\": \"private\"}";
             await client.PutAsync(delistt, new StringContent(json3, Encoding.UTF8, "application/json"));
 
-
             string json2 = "{\"join_rule\": \"invite\"}";
             await client.PutAsync(setprivatee, new StringContent(json2, Encoding.UTF8, "application/json"));
 
@@ -254,7 +283,6 @@ namespace WpfApp1
             await client.PostAsync(kickqueryy, new StringContent(jsona, Encoding.UTF8, "application/json"));
 
             return null;
-
         }
     }
 }
