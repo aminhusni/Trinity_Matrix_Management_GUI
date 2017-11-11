@@ -3,8 +3,8 @@ A management GUI for Matrix-Synapse server
 
 ## To do list
 
-- Do proper error handling
-- Parse responses properly according to spec
+- [DONE] Do proper error handling
+- [DONE] Parse responses properly according to spec
 - Optimize cancerous codes
 - Force logout of all devices(security response for admins)
 - Properly redact before purging room
@@ -18,5 +18,10 @@ A management GUI for Matrix-Synapse server
 - Purge room
 - View supported API versions
 
-## [Note] Purge Room 
+## NOTES
+### Purge Room
 When a room is purged, what happens is that you basically kick every user out, delist the room from directory and set it to invite only. Then the program will proceed to kick also the admin(you). This is the ensure that nobody will ever have access to the room ever. 
+
+### Create User
+When creating a user, you will need to provide the shared secret in order to generate the HMAC. This is reliant on the old API used to create users by server admins. 
+The shared secret can be set or found in your matrix.yaml configuration file. 
