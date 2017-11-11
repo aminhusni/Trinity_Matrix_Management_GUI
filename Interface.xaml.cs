@@ -124,9 +124,10 @@ namespace WpfApp1
 
             try
             {
-                Task<dynamic> t = object1.reset(usernamebox.Text);
+                Task<string> t = object1.reset(usernamebox.Text);
                 await t;
-                statusbox2.AppendText("Password set!");
+                string stringgy = t.Result;
+                statusbox2.AppendText("Temporary Password:" + stringgy);
             }
             catch (Exception ex)
             {

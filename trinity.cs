@@ -6,6 +6,7 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
 using System.Net;
+using System.Web.Security;
 
 //System.Windows.MessageBox.Show("", "ERROR!", System.Windows.MessageBoxButton.OK);
 
@@ -125,10 +126,12 @@ namespace WpfApp1
             return null;
         }
 
-        public async Task<dynamic> reset(string user) {
+        public async Task<string> reset(string user) {
+
+            string pass = Membership.GeneratePassword(10, 4);
             string reset = "/_matrix/client/r0/admin/reset_password/";
             string query = BASE_URL + reset + user + authstring;
-            string json = "{\"new_password\":\"tempopassword\"}";
+            string json = "{\"new_password\":\""+  pass + "\"}";
 
             Debug.WriteLine(query);
             var response = await client.PostAsync(query, new StringContent(json, Encoding.UTF8, "application/json"));
@@ -136,8 +139,7 @@ namespace WpfApp1
             checkresp(response.StatusCode);
             Debug.WriteLine(mes);
 
-            dynamic values = JsonConvert.DeserializeObject<dynamic>(mes);
-            return values;
+            return pass;
         }
 
         //To be used by HMAC stuff
