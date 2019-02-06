@@ -1,6 +1,9 @@
 # Trinity_Matrix_Management_GUI
 A management GUI for Matrix-Synapse server
 
+## Installation & Use
+- Grab the Trinity.zip from the releases tab and run the installer. 
+
 ## Development Dependencies 
 - .NET Framework
 - Visual Studio 2018
