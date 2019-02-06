@@ -3,6 +3,7 @@ A management GUI for Matrix-Synapse server
 
 ## Installation & Use
 - Grab the Trinity.zip from the releases tab and run the installer. 
+https://github.com/aminhusni/Trinity_Matrix_Management_GUI/releases
 
 ## Development Dependencies 
 - .NET Framework
