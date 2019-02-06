@@ -1,6 +1,11 @@
 # Trinity_Matrix_Management_GUI
 A management GUI for Matrix-Synapse server
 
+## Development Dependencies 
+- .NET Framework
+- Visual Studio 2018
+Just open the csproj file in Visual Studio and click run to compile. 
+
 ## To do list
 
 - [DONE] Do proper error handling
