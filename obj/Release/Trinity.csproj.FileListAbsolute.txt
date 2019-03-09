@@ -1,5 +1,0 @@
-C:\Users\aminh\source\repos\Trinity_Matrix_Management_GUI\obj\Release\MainWindow.g.cs
-C:\Users\aminh\source\repos\Trinity_Matrix_Management_GUI\obj\Release\Interface.g.cs
-C:\Users\aminh\source\repos\Trinity_Matrix_Management_GUI\obj\Release\App.g.cs
-C:\Users\aminh\source\repos\Trinity_Matrix_Management_GUI\obj\Release\Trinity_MarkupCompile.cache
-C:\Users\aminh\source\repos\Trinity_Matrix_Management_GUI\obj\Release\Trinity_MarkupCompile.lref
